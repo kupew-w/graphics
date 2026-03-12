@@ -1,3 +1,0 @@
-/home/OwO/programing/graphics/build/CMakeFiles/Graphics.dir
-/home/OwO/programing/graphics/build/CMakeFiles/edit_cache.dir
-/home/OwO/programing/graphics/build/CMakeFiles/rebuild_cache.dir

@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/OwO/programing/graphics/build",
-  "command": "/usr/bin/c++  -I/home/OwO/programing/graphics/include -std=gnu++20 -o CMakeFiles/Graphics.dir/src/main.cpp.o -c /home/OwO/programing/graphics/src/main.cpp",
-  "file": "/home/OwO/programing/graphics/src/main.cpp",
-  "output": "CMakeFiles/Graphics.dir/src/main.cpp.o"
-}
-]
