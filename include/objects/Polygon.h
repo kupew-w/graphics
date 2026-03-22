@@ -1,21 +1,15 @@
 #pragma once
 
-#include <vector>
-
-#include "Math/Vector.h"
+#include "Math/Vec3.h"
 
 namespace gp 
 {
 
-class Polygon
+struct Triangle
 {
-private:
-    std::vector<gp::Vector> points;
+    Vec3 a, b, c;
 
-public:
-    Polygon() = delete;
-
-    Polygon(std::vector<gp::Vector>&& points) : points(std::move(points)) {}
+    Triangle() = delete;
 };
 
 }

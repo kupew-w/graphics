@@ -1,18 +1,16 @@
 #pragma once
 
-#include "Math/Vector.h"
+#include "Math/Vec3.h"
 
 namespace gp
 {
 
-class Object
+struct Object
 {
-private:
-    gp::Vector coordinates;
+    gp::Vec3 coordinates, position, scale;
 
-public:
-    Object(gp::Vector coordinates) : coordinates(coordinates) {}
-    Object(float x, float y, float z) : coordinates(x, y, z) {}
+    float mass;
+
 };
 
 }
