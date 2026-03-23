@@ -1,5 +1,5 @@
 
-#include "objects/Polygon.h"
+#include "objects/Triangle.h"
 #include <vector>
 
 namespace  gp 

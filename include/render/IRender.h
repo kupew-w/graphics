@@ -1,15 +1,11 @@
 #pragma once
 
 #include <string>
-#include <cstdint>
 
-namespace pl 
-{
+#include "objects/Color.h"
 
-struct Color
+namespace gp 
 {
-    uint8_t r, g, b, a;
-};
 
 class IRender
 {
