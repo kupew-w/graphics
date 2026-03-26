@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math/Vec3.h"
+#include "math/Vec3.h"
 #include "objects/Mesh.h"
 
 #include <memory>

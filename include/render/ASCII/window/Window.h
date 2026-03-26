@@ -1,8 +1,8 @@
 #pragma once
 
-#include "objects/Object.h"
+#include "render/ASCII/render/Drawble.h"
 
-namespace gp 
+namespace asc 
 {
 
 class Window
@@ -17,7 +17,7 @@ public:
     void shutdown();
 
     void clear();
-    void draw(Object&);
+    void draw(Drawble&);
     void display();
 };
 
