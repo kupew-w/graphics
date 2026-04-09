@@ -1,28 +1,27 @@
 #pragma once
 
-#include <string>
-
+#include "geomtery/Line2D.h"
+#include "geomtery/Triagle2D.h"
 #include "objects/Color.h"
+#include <string>
 
 namespace gp 
 {
 
 class IRender
 {
+protected:
+    std::string buffer;
+
+    int width, height;
+
 public:
-    virtual void dot(float x, float y, Color color) = 0;
-    virtual void line(float x1, float y1, float x2, float y2, Color color) = 0;
-    virtual void circle(float x, float y, float radius, Color color) = 0;
-    virtual void rectangle(float x1, float y1, float x2, float y2, Color color) = 0;
-    virtual void text(float x, float y, std::string, Color color) = 0;
+    virtual void drawPixel(int x, int y, Color color) = 0;
+    virtual void drawLine(Line2D) = 0;
+    virtual void drawTriangle(Triangle2D) = 0;
 
-    virtual int width() const = 0;
-    virtual int height() const = 0;
-
-    virtual void processEvent() = 0;
     virtual void clear() = 0;
-    virtual void display() = 0;
-    virtual bool isOpen() const = 0;
+    virtual std::string getBuffer() = 0;
 
     IRender() = default;
     IRender(IRender&&) = default;

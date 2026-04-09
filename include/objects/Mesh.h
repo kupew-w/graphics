@@ -1,5 +1,5 @@
 
-#include "objects/Triangle.h"
+#include "geomtery/Triangle.h"
 #include <vector>
 
 namespace  gp 

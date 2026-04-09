@@ -1,6 +1,6 @@
 #pragma once
 
-#include "objects/Vertex.h"
+#include "geomtery/Vertex.h"
 
 namespace gp 
 {

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "render/ASCII/render/Drawble.h"
-
+#include <string>
 namespace asc 
 {
 
@@ -17,8 +16,7 @@ public:
     void shutdown();
 
     void clear();
-    void draw(Drawble&);
-    void display();
+    void display(std::string buffer);
 };
 
 }
