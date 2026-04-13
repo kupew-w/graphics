@@ -1,20 +1,24 @@
 #pragma once
 
-#include "render/IRender.h"
-#include <string>
+#include "render/IWindow.h"
+#include <vector>
 
-namespace asc 
+namespace gp 
 {
 
-class Render : public gp::IRender
+class AsciiWindow : public IWindow
 {
+private:
+    std::vector<std::vector<char>> buffer;
+
 public:
+    AsciiWindow(int w, int h); 
+
     void drawPixel(int x, int y, gp::Color c) override;
     void drawLine(gp::Line2D) override;
     void drawTriangle(gp::Triangle2D) override;
 
     void clear() override;
-    std::string getBuffer() override;
 };
 
 }

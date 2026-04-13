@@ -8,6 +8,7 @@ struct Vec3
     float x, y, z;
 
     Vec3() : x(0), y(0), z(0) {}
+    Vec3(int x, int y, int z) : x(x), y(y), z(z) {}
     Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
 
     ~Vec3() = default;
@@ -22,11 +23,11 @@ struct Vec3
     void operator*= (const float);
     void operator/= (const float);
 
-    Vec3 normalize() ;
+    Vec3 normalize();
     float lenght();
 
-    static Vec3 crossProd(const Vec3&, const Vec3&);
-    static float dotProd(const Vec3&, const Vec3&);
+    static inline Vec3 crossProd(const Vec3&, const Vec3&);
+    static inline float dotProd(const Vec3&, const Vec3&);
 };
 
 }

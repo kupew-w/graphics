@@ -1,17 +1,24 @@
 
-#include "render/ASCII/render/Render.h"
+#include "render/ASCII/window/AsciiWindow.h"
 #include <algorithm>
-#include <string>
 
-namespace asc 
+namespace gp 
 {
 
-void Render::drawPixel(int x, int y, gp::Color c)
+AsciiWindow::AsciiWindow(int w, int h) : IWindow(w, h) 
 {
-
+    buffer = std::vector(w, std::vector<char>(h, ' '));
 }
 
-void Render::drawLine(gp::Line2D l)
+void AsciiWindow::drawPixel(int x, int y, gp::Color c)
+{
+    int s = c.r*0.21+c.g*0.72+c.b*0.07;
+
+
+    buffer[x][y] = s;
+}
+
+void AsciiWindow::drawLine(gp::Line2D l)
 {
     int x1 = l.a.position.x;
     int x2 = l.b.position.x;
@@ -44,7 +51,7 @@ void Render::drawLine(gp::Line2D l)
     }
 }
 
-void Render::drawTriangle(gp::Triangle2D t)
+void AsciiWindow::drawTriangle(gp::Triangle2D t)
 {
     const int X1 = (t.a.position.x * 16)+ 0.5;
     const int X2 = (t.b.position.x * 16)+ 0.5;
@@ -87,6 +94,10 @@ void Render::drawTriangle(gp::Triangle2D t)
     int CY2 = C2 + DX23 * (miny << 4) - DY23 * (minx << 4);
     int CY3 = C2 + DX31 * (miny << 4) - DY31 * (minx << 4);
 
+    // AB = -DX12 -DY12
+    // AC = DX31 DY31
+    float Sabc = (DX31*DY12)-(DX12*DY31);
+
     for(int y = miny; y < maxy; ++y)
     {
         int CX1 = CY1;
@@ -96,7 +107,14 @@ void Render::drawTriangle(gp::Triangle2D t)
         for(int x = minx; x < maxx; ++x)
         {
             if(CX1 > 0 && CX2 > 0 && CX3 > 0)
-                drawPixel(x, y, {}); //FIXME // change to buffer
+            {
+                //Color
+                float u = Vec2::crossProd({-DX23, -DY23}, {x-X2, y-Y2})/Sabc;
+                float w = Vec2::crossProd({DX12, DY12}, {x-X2, y-Y2})/Sabc;
+                float v = 1-u-w;
+
+                drawPixel(x, y, t.a.color*u+t.b.color*v+t.c.color*w); 
+            }
 
             CX1 -= FDY12;
             CX2 -= FDY23;
@@ -107,11 +125,6 @@ void Render::drawTriangle(gp::Triangle2D t)
         CY2 += FDX23;
         CY3 += FDX31;
     }
-}
-
-std::string Render::getBuffer()
-{
-    return buffer;
 }
 
 }
