@@ -20,19 +20,19 @@ int main()
     gp::asc::Window window(width, height);
 
     gp::Triangle2D triangle;
-    gp::Vertex2D v = {{0,0}, {255,255,0}};
+    gp::Vertex2D v = {{0,0}, {100,0,0}};
     triangle.a = v;
-    v = {{0,height}, {255,0,255}};
+    v = {{0,height}, {0,0,255}};
     triangle.b = v;
-    v = {{width,0}, {0,255,255}};
+    v = {{width,0}, {0,255,0}};
     triangle.c = v;
 
     window.init();
     window.clear();
     window.drawTest();
-    //std::cout << width << " :w\t" << height << " :h\n";
     window.drawTriangle(triangle);
     window.display();
+    //std::cout << width << " :w\t" << height << " :h\n";
     sleep(5);
     window.close();
 

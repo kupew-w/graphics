@@ -140,6 +140,7 @@ void Window::drawTriangle(gp::Triangle2D t)
     int CY3 = C3 + DX31 * (miny << 4) - DY31 * (minx << 4);
 
     float Sabc = (DX31*DY12)-(DX12*DY31);
+    if(std::abs(Sabc) < 1e-5f) return;
 
     for(int y = miny; y < maxy; ++y)
     {
@@ -156,7 +157,11 @@ void Window::drawTriangle(gp::Triangle2D t)
                 float w = Vec2::crossProd({DX12, DY12}, {x-X2, y-Y2})/Sabc;
                 float v = 1-u-w;
 
-                drawPixel(x, y, t.a.color*u+t.b.color*v+t.c.color*w); 
+                Color c = t.a.color*u+t.b.color*v+t.c.color*w;
+                c.r = std::clamp<float>(c.r, 0.0f, 255.0f);
+                c.g = std::clamp<float>(c.g, 0.0f, 255.0f);
+                c.b = std::clamp<float>(c.b, 0.0f, 255.0f);
+                drawPixel(x, y, c); 
             }
 
             CX1 -= FDY12;
