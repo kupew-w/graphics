@@ -1,24 +1,69 @@
 
-#include "render/ASCII/window/AsciiWindow.h"
+#include "render/ASCII/window/Window.h"
+#include "render/ASCII/render/Color.h"
 #include <algorithm>
+#include <climits>
+#include <iostream>
+#include <ostream>
 
-namespace gp 
-{
+using namespace gp;
+using namespace asc;
 
-AsciiWindow::AsciiWindow(int w, int h) : IWindow(w, h) 
+Window::Window(int w, int h) : IWindow(w, h) 
 {
-    buffer = std::vector(w, std::vector<char>(h, ' '));
+    buffer = std::vector(h, std::vector<Pixel>(w, Pixel(' ', INT_MAX)));
 }
 
-void AsciiWindow::drawPixel(int x, int y, gp::Color c)
+void Window::init()
 {
-    int s = c.r*0.21+c.g*0.72+c.b*0.07;
-
-
-    buffer[x][y] = s;
+    std::cout << "\x1b[?1049h"; //enable alternate buffer
+    std::cout << "\x1b[?25l"; //hide cursor
+    std::cout << "\x1b[H"; // move cursor to 0 0
 }
 
-void AsciiWindow::drawLine(gp::Line2D l)
+void Window::close()
+{
+    std::cout << "\x1b[?25h"; //show cursor
+    std::cout << "\x1b[?1049l"; //disable alternate buffer
+}
+
+void Window::clear()
+{
+    std::cout << "\x1b[2J"; //clear screen
+    std::cout << "\x1b[H"; //move cursor to 0 0 
+}
+
+void Window::display()
+{
+    std::cout << "\x1b[H"; //move cursor to 0 0 
+    
+    std::string screen;
+    screen.reserve(height*width+height);
+
+    //std::cout << height << " :h\t" << width << " :w\n";
+    for(int y = 0; y < height; ++y) {
+        for(int x = 0; x < width; ++x) 
+        {
+            screen += buffer[y][x].c;
+        }
+        screen += '\n';
+    }
+    
+    std::cout << screen << std::flush;
+}
+
+void Window::drawPixel(int x, int y, gp::Color c)
+{
+    if(x < 0 || x >= width || y < 0 || y >= height) return;
+    buffer[y][x].c = AsciiColor::cts(c); // add z-buffer check
+}
+
+void Window::drawTest()
+{
+    buffer[0][0].c = '#';
+}
+
+void Window::drawLine(gp::Line2D l)
 {
     int x1 = l.a.position.x;
     int x2 = l.b.position.x;
@@ -35,7 +80,7 @@ void AsciiWindow::drawLine(gp::Line2D l)
 
     while(x1 != x2 || y1 != y2)
     {
-        drawPixel(x1, x2, {}); //FIXME chage to buffer
+        drawPixel(x1, y1, {}); //FIXME chage to buffer
         int error2 = error * 2;
         
         if(error2 > -dY)
@@ -51,7 +96,7 @@ void AsciiWindow::drawLine(gp::Line2D l)
     }
 }
 
-void AsciiWindow::drawTriangle(gp::Triangle2D t)
+void Window::drawTriangle(gp::Triangle2D t)
 {
     const int X1 = (t.a.position.x * 16)+ 0.5;
     const int X2 = (t.b.position.x * 16)+ 0.5;
@@ -92,10 +137,8 @@ void AsciiWindow::drawTriangle(gp::Triangle2D t)
 
     int CY1 = C1 + DX12 * (miny << 4) - DY12 * (minx << 4);
     int CY2 = C2 + DX23 * (miny << 4) - DY23 * (minx << 4);
-    int CY3 = C2 + DX31 * (miny << 4) - DY31 * (minx << 4);
+    int CY3 = C3 + DX31 * (miny << 4) - DY31 * (minx << 4);
 
-    // AB = -DX12 -DY12
-    // AC = DX31 DY31
     float Sabc = (DX31*DY12)-(DX12*DY31);
 
     for(int y = miny; y < maxy; ++y)
@@ -125,6 +168,4 @@ void AsciiWindow::drawTriangle(gp::Triangle2D t)
         CY2 += FDX23;
         CY3 += FDX31;
     }
-}
-
 }

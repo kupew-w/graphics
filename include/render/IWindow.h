@@ -15,6 +15,9 @@ protected:
 public:
     IWindow(int w, int h) : width(w), height(h) {}
 
+    virtual void init() = 0;
+    virtual void close() = 0;
+
     virtual void drawPixel(int x, int y, Color color) = 0;
     virtual void drawLine(Line2D) = 0;
     virtual void drawTriangle(Triangle2D) = 0;

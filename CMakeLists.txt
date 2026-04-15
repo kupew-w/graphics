@@ -6,6 +6,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(Graphics
 	src/main.cpp
+    src/math/Vec2.cpp
+    src/math/Vec3.cpp
+    src/math/Vec4.cpp
+    src/objects/Color.cpp
+    src/render/ASCII/render/Color.cpp
+    src/render/ASCII/window/Window.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
