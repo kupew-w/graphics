@@ -1,7 +1,6 @@
 #include "fstream/FObj.h"
-#include "geomtery/Triangle.h"
+#include "geomtery/Face.h"
 #include "geomtery/Vertex.h"
-#include "objects/Object.h"
 #include <cstdio>
 #include <fstream>
 #include <memory>
@@ -30,18 +29,16 @@ std::shared_ptr<Mesh> FObj::read(const std::string& ptf)
         {
             Vec3 v;
             std::scanf(line.c_str(), "v %f %f %f", &v.x, &v.y, &v.z);
-            Vertex ver = {v, {255, 255, 255}}; //FIXME
-            vertexes.push_back(ver);
+            out->vertices.push_back({v, {255, 255, 255}});//FIXME color
         }         
         else if(line [0] == 'f')
         {
-            Triangle t;
-            int a, b, c;
-            std::scanf(line.c_str(), "f %f %f %f", &a, &b, &c);
-            t.a = vertexes[a];
-            t.b = vertexes[b];
-            t.c = vertexes[c];
-            out->triangles.push_back(t);
+            Face f;
+            std::scanf(line.c_str(), "f %f %f %f", &f.a, &f.b, &f.c);
+            --f.a;
+            --f.b;
+            --f.c;
+            out->faces.push_back(f);
         }
     }
 

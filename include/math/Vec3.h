@@ -26,8 +26,8 @@ struct Vec3
     Vec3 normalize();
     float lenght();
 
-    static inline Vec3 crossProd(const Vec3&, const Vec3&);
-    static inline float dotProd(const Vec3&, const Vec3&);
+    static Vec3 crossProd(const Vec3&, const Vec3&);
+    static float dotProd(const Vec3&, const Vec3&);
 };
 
 }

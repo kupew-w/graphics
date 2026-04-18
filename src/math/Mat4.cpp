@@ -1,7 +1,15 @@
 #include "math/Mat4.h"
 #include "math/Vec4.h"
+#include <cmath>
 
 using namespace gp;
+
+Mat4::Mat4()
+{
+    for(int i = 0; i < 4; ++i)
+        for(int j = 0; i < 4; ++j)
+            mat[i][j] = 0;
+}
 
 Mat4 Mat4::operator*(const float a)
 {
@@ -46,5 +54,23 @@ void Mat4::operator*=(const float a)
         
 void Mat4::operator*=(const Mat4& mat)
 {
+//FIXME
+}
 
+Mat4 Mat4::rotationMatrix(float yaw, float pitch, float roll)
+{
+    Mat4 out;
+
+    out.mat[0][0] = cos(yaw)*cos(pitch);
+    out.mat[1][0] = cos(yaw)*sin(pitch)*sin(roll)-sin(yaw)*cos(roll);
+    out.mat[2][0] = cos(yaw)*sin(pitch)*cos(roll)+sin(yaw)*sin(roll);
+    out.mat[0][1] = sin(yaw)*cos(pitch);
+    out.mat[1][1] = sin(yaw)*sin(pitch)*sin(roll)+cos(yaw)*cos(roll);
+    out.mat[2][1] = sin(yaw)*sin(pitch)*cos(roll)-cos(yaw)*sin(roll);
+    out.mat[0][2] = -sin(pitch);
+    out.mat[1][2] = cos(pitch)*sin(roll);
+    out.mat[2][2] = cos(pitch)*cos(roll);
+    out.mat[3][3] = 1;
+
+    return out;
 }

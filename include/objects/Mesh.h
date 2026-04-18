@@ -1,6 +1,7 @@
 #pragma once
 
-#include "geomtery/Triangle.h"
+#include "geomtery/Vertex.h"
+#include "geomtery/Face.h"
 #include <vector>
 
 namespace  gp 
@@ -8,7 +9,8 @@ namespace  gp
 
 struct Mesh
 {
-    std::vector<Triangle> triangles;
+    std::vector<Vertex> vertices;
+    std::vector<Face> faces;
 };
 
 }
