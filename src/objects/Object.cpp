@@ -23,6 +23,5 @@ Mat4 Object::modelMatrix()
     out.mat[2][3] = scale.z*coordinates.z;
     out.mat[3][3] = 1;
 
-
     return out;
 }

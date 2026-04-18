@@ -6,6 +6,9 @@
 
 using namespace gp;
 
+Camera::Camera()
+{}
+
 void Camera::rotate(float yaw, float pitch, float roll)
 {
 //FIXME

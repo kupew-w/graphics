@@ -3,7 +3,9 @@
 #include "geomtery/Vertex.h"
 #include <cstdio>
 #include <fstream>
+#include <iostream>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 
@@ -23,18 +25,20 @@ std::shared_ptr<Mesh> FObj::read(const std::string& ptf)
 
     while(std::getline(file, line))
     {
-        if(line.size() < 2) continue; 
+        std::istringstream ss(line);
+        std::string type;
+        ss >> type;
 
-        if(line[0] == 'v' && line[1] == ' ')
+        if(type == "v")
         {
             Vec3 v;
-            std::scanf(line.c_str(), "v %f %f %f", &v.x, &v.y, &v.z);
+            ss >> v.x >> v.y >> v.z;
             out->vertices.push_back({v, {255, 255, 255}});//FIXME color
         }         
-        else if(line [0] == 'f')
+        else if(type == "f")
         {
             Face f;
-            std::scanf(line.c_str(), "f %f %f %f", &f.a, &f.b, &f.c);
+            ss >> f.a >> f.b >> f.c;
             --f.a;
             --f.b;
             --f.c;

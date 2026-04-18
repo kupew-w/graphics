@@ -1,4 +1,5 @@
 #include "math/Mat4.h"
+#include "math/Vec3.h"
 #include "math/Vec4.h"
 #include <cmath>
 
@@ -32,6 +33,15 @@ Vec4 Mat4::operator*(const Vec4& v)
     out.w += v.x*mat[3][0] + v.y*mat[3][1] + v.z*mat[3][2] + v.w*mat[3][3];
 
     return out;
+}
+
+Vec3 Mat4::operator*(const Vec3& v)
+{
+    Vec4 t;
+
+    t = operator*(Vec4(v.x, v.y, v.z, 1));
+
+    return {t.x, t.y, t.z};
 }
 
 Mat4 Mat4::operator*(const Mat4& m)
