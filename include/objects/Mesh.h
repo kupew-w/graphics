@@ -1,3 +1,4 @@
+#pragma once
 
 #include "geomtery/Triangle.h"
 #include <vector>

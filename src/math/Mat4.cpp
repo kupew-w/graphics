@@ -1,0 +1,50 @@
+#include "math/Mat4.h"
+#include "math/Vec4.h"
+
+using namespace gp;
+
+Mat4 Mat4::operator*(const float a)
+{
+    Mat4 out;
+
+    for(int i = 0; i < 4; ++i)
+        for(int j = 0; i < 4; ++j)
+            out.mat[i][j] = mat[i][j] * a;
+
+    return out;
+}
+
+Vec4 Mat4::operator*(const Vec4& v)
+{
+    Vec4 out;
+
+    out.x += v.x*mat[0][0] + v.y*mat[0][1] + v.z*mat[0][2] + v.w*mat[0][3];
+    out.y += v.x*mat[1][0] + v.y*mat[1][1] + v.z*mat[1][2] + v.w*mat[1][3];
+    out.z += v.x*mat[2][0] + v.y*mat[2][1] + v.z*mat[2][2] + v.w*mat[2][3];
+    out.w += v.x*mat[3][0] + v.y*mat[3][1] + v.z*mat[3][2] + v.w*mat[3][3];
+
+    return out;
+}
+
+Mat4 Mat4::operator*(const Mat4& m)
+{
+    Mat4 out;
+
+    for(int i = 0; i < 4; ++i)
+        for(int j = 0; j < 4; ++j)
+            out.mat[i][j] = mat[i][0]*m.mat[0][i] + mat[i][1]*m.mat[1][i] + mat[i][2]*m.mat[2][i] + mat[i][3]*m.mat[3][i];
+
+    return out;
+}
+
+void Mat4::operator*=(const float a)
+{
+     for(int i = 0; i < 4; ++i)
+        for(int j = 0; i < 4; ++j)
+            mat[i][j] *= a;
+}
+        
+void Mat4::operator*=(const Mat4& mat)
+{
+
+}

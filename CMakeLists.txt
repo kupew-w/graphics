@@ -9,9 +9,11 @@ add_executable(Graphics
     src/math/Vec2.cpp
     src/math/Vec3.cpp
     src/math/Vec4.cpp
+    src/math/Mat4.cpp
     src/objects/Color.cpp
     src/render/ASCII/render/Color.cpp
     src/render/ASCII/window/Window.cpp
+    src/fstream/FObj.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")

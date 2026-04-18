@@ -38,7 +38,7 @@ void Window::display()
     std::cout << "\x1b[H"; //move cursor to 0 0 
     
     std::string screen;
-    screen.reserve(height*width+height);
+    screen.reserve(height*width-height);
 
     //std::cout << height << " :h\t" << width << " :w\n";
     for(int y = 0; y < height; ++y) {

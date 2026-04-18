@@ -1,13 +1,13 @@
 #pragma once
 
-#include "istream/IStream.h"
+#include "fstream/IStream.h"
 #include "objects/Object.h"
 #include <memory>
 #include <string>
 namespace gp 
 {
 
-struct IObj : IStream
+struct FObj : IStream
 {
     std::shared_ptr<Mesh> read(const std::string& path_to_file) noexcept(false) override final;
 };

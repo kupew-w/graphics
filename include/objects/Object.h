@@ -1,4 +1,5 @@
 #pragma once 
+
 #include "math/Vec3.h"
 #include "objects/Mesh.h"
 
@@ -9,11 +10,14 @@ namespace gp
 
 class Object
 {
+private:
     gp::Vec3 coordinates, scale;
 
     std::shared_ptr<gp::Mesh> mesh;
 
     float mass;
+
+public:
 
     //TODO add hitbox
 
