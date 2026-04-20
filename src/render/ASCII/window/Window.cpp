@@ -39,7 +39,8 @@ void Window::display()
     std::cout << "\x1b[H"; //move cursor to 0 0 
     
     std::string screen;
-    screen.reserve(height*width-height);
+    screen.reserve(height*width+height);
+    std::cout << height  << " :h\t" << width << " :w\n";
 
     //std::cout << height << " :h\t" << width << " :w\n";
     for(int y = 0; y < height; ++y) {
@@ -146,7 +147,7 @@ void Window::drawTriangle(gp::Triangle2D t)
 
         for(int x = minx; x < maxx; ++x)
         {
-            if(CX1 <= 0 && CX2 <= 0 && CX3 <= 0)
+            if((CX1 <= 0 && CX2 <= 0 && CX3 <= 0) || (CX1 >= 0 && CX2 >= 0 && CX3 >= 0))
             {
                 //Color
                 float u = Vec2::crossProd({-DX23, -DY23}, {x-X2, y-Y2})/Sabc;

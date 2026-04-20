@@ -18,9 +18,9 @@ Mat4 Object::modelMatrix()
     out.mat[0][2] = scale.x*-sin(pitch);
     out.mat[1][2] = scale.y*cos(pitch)*sin(roll);
     out.mat[2][2] = scale.z*cos(pitch)*cos(roll);
-    out.mat[0][3] = scale.x*position.x;
-    out.mat[1][3] = scale.y*position.y;
-    out.mat[2][3] = scale.z*position.z;
+    out.mat[3][0] = position.x;
+    out.mat[3][1] = position.y;
+    out.mat[3][2] = position.z;
     out.mat[3][3] = 1;
 
     return out;
