@@ -1,5 +1,7 @@
 #pragma once
 
+#include "math/Vec2.h"
+#include "math/Vec3.h"
 #include "render/IWindow.h"
 #include "render/ASCII/render/Pixel.h"
 #include <vector>
@@ -22,10 +24,11 @@ public:
     void drawPixel(int x, int y, gp::Color c) override;
     void drawLine(gp::Line2D) override;
     void drawTriangle(gp::Triangle2D) override;
-    void drawTest();
 
     void clear() override;
     void display() override;
+
+    Vec2 toScreen(Vec3);
 };
 
 }}

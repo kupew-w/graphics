@@ -11,7 +11,7 @@ namespace gp
 
 struct Object
 {
-    Vec3 coordinates, scale;
+    Vec3 position, scale;
 
     float yaw = 0, pitch = 0, roll = 0;
 
@@ -21,7 +21,7 @@ struct Object
 
     //TODO add hitbox
 
-    Object(Vec3 coordinates) : coordinates(coordinates), scale({1, 1, 1}), mass(0) {}
+    Object(Vec3 coordinates) : position(coordinates), scale({1, 1, 1}), mass(0) {}
     Object(std::shared_ptr<Mesh> mesh) : mesh(mesh) { Object(Vec3({0, 0, 0})); }
     Object(Vec3 coordinates, std::shared_ptr<Mesh> mesh) : mesh(mesh) { Object(Vec3(coordinates)); }
 

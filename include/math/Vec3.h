@@ -1,15 +1,19 @@
 #pragma once
 
+
 namespace gp 
 {
 
+struct Vec4;
+
 struct Vec3
 {
-    float x, y, z;
+    float x = 0, y = 0, z = 0;
 
     Vec3() : x(0), y(0), z(0) {}
     Vec3(int x, int y, int z) : x(x), y(y), z(z) {}
     Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+    Vec3(Vec4 v);
 
     ~Vec3() = default;
 

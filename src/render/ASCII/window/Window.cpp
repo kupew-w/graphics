@@ -1,5 +1,6 @@
 
 #include "render/ASCII/window/Window.h"
+#include "math/Vec3.h"
 #include "render/ASCII/render/Color.h"
 #include <algorithm>
 #include <climits>
@@ -56,11 +57,6 @@ void Window::drawPixel(int x, int y, gp::Color c)
 {
     if(x < 0 || x >= width || y < 0 || y >= height) return;
     buffer[y][x].c = AsciiColor::cts(c); // add z-buffer check
-}
-
-void Window::drawTest()
-{
-    buffer[0][0].c = '#';
 }
 
 void Window::drawLine(gp::Line2D l)
@@ -150,7 +146,7 @@ void Window::drawTriangle(gp::Triangle2D t)
 
         for(int x = minx; x < maxx; ++x)
         {
-            if(CX1 > 0 && CX2 > 0 && CX3 > 0)
+            if(CX1 <= 0 && CX2 <= 0 && CX3 <= 0)
             {
                 //Color
                 float u = Vec2::crossProd({-DX23, -DY23}, {x-X2, y-Y2})/Sabc;
@@ -173,4 +169,14 @@ void Window::drawTriangle(gp::Triangle2D t)
         CY2 += FDX23;
         CY3 += FDX31;
     }
+}
+
+Vec2 Window::toScreen(Vec3 v)
+{
+    Vec2 out;
+
+    out.x = (v.x + 1) * 0.5f * width; 
+    out.y = (1 - v.y) * 0.5f * height; 
+
+    return out;
 }

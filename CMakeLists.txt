@@ -9,6 +9,7 @@ add_executable(Graphics
     src/math/Vec2.cpp
     src/math/Vec3.cpp
     src/math/Vec4.cpp
+    src/math/VecConversions.cpp
     src/math/Mat4.cpp
     src/objects/Color.cpp
     src/objects/Object.cpp
