@@ -22,8 +22,8 @@ struct Object
     //TODO add hitbox
 
     Object(Vec3 coordinates) : position(coordinates), scale({1, 1, 1}), mass(0) {}
-    Object(std::shared_ptr<Mesh> mesh) : mesh(mesh) { Object(Vec3({0, 0, 0})); }
-    Object(Vec3 coordinates, std::shared_ptr<Mesh> mesh) : mesh(mesh) { Object(Vec3(coordinates)); }
+    Object(std::shared_ptr<Mesh> mesh) : Object(Vec3({0, 0, 0})) { this->mesh = mesh; }
+    Object(Vec3 coordinates, std::shared_ptr<Mesh> mesh) : Object(Vec3(coordinates)) { this->mesh = mesh; }
 
     Mat4 modelMatrix();
 };

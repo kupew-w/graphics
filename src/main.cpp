@@ -66,7 +66,7 @@ int main()
 
     gp::Object cube(mcube);
 
-    cube.position = {0, 0, 5};
+    cube.position = {0, 0, 0};
 
 
     struct winsize w;
@@ -86,7 +86,6 @@ int main()
 
     window.init();
     window.clear();
-    // window.drawTest();
 
     /*for(gp::Face f : cube.mesh->faces)
     {
@@ -147,82 +146,73 @@ int main()
         window.drawTriangle(t2);
     }*/
 
-    // gp::Triangle2D t;
-    //
-    // t.a = gp::Vertex2D({0, 0}, {255,255,255});
-    // t.b = gp::Vertex2D({10, 0}, {255,255,255});
-    // t.c = gp::Vertex2D({0, 10}, {255,255,255});
-    // window.drawTriangle(t);
-    //
-    // t.a = gp::Vertex2D({10, 10}, {255,255,255});
-    // t.b = gp::Vertex2D({0, 10}, {255,255,255});
-    // t.c = gp::Vertex2D({10, 0}, {255,255,255});
-    //
-    // window.drawTriangle(t);
-    //
-    /*for(gp::Face f : enderRodMesh->faces)
+    // for (gp::Face f : cube.mesh->faces)
+    for(int i = 8; i < 10; ++i)
     {
+        gp::Face f = cube.mesh->faces[i];
+
         gp::Triangle t;
-        t.a = enderRodMesh->vertices[f.a];
-        t.b = enderRodMesh->vertices[f.b];
-        t.c = enderRodMesh->vertices[f.c];
 
-        std::cout << "1test\n";
+        t.a = gp::Vertex(cube.mesh->vertices[f.a]);
+        t.b = gp::Vertex(cube.mesh->vertices[f.b]);
+        t.c = gp::Vertex(cube.mesh->vertices[f.c]);
 
-        t.a.position = cam.projectionMatrix() * cam.viewMatrix() * enderRod.modelMatrix() * t.a.position;
-        t.b.position = cam.projectionMatrix() * cam.viewMatrix() * enderRod.modelMatrix() * t.b.position;
-        t.c.position = cam.projectionMatrix() * cam.viewMatrix() * enderRod.modelMatrix() * t.c.position;
-    }*/
+        // gp::Vec4 a = gp::Vec4(t.a.position); 
+        // gp::Vec4 b = gp::Vec4(t.b.position);
+        // gp::Vec4 c = gp::Vec4(t.c.position);
+        
+        gp::Vec4 a, b, c;
 
-    //std::cout << width << " :w\t" << height << " :h\n";
-    
-    //while(true)
-    //{
+        gp::Mat4 proj = cam.projectionMatrix();
+        gp::Mat4 view = cam.viewMatrix();
+        gp::Mat4 mod = cube.modelMatrix();
 
-    gp::Triangle t;
+        std::cout << t.b.position.x << " " << t.b.position.y << " " << t.b.position.z << " :tribngle\n";
+        std::cout << cube.scale.x << " " << cube.scale.y << " " << cube.scale.z << " :scale\n";
 
-    t.a = gp::Vertex({0, 0, 3}, {255,255,255});
-    t.b = gp::Vertex({3, 0, 3}, {255,255,255});
-    t.c = gp::Vertex({0, 3, 3}, {255,255,255});
+        //a = mod * a;
+        // b = mod * b;
+        // c = mod * c;
 
-    gp::Vec4 a, b, c;
 
-    gp::Mat4 proj = cam.projectionMatrix();
-    gp::Mat4 view = cam.viewMatrix();
+        // a = view * a;
+        // b = view * a;
+        // c = view * a;
+        
+        a = view*gp::Vec4(t.a.position);
+        b = view*gp::Vec4(t.b.position);
+        c = view*gp::Vec4(t.c.position);
 
-    std::cout << t.b.position.x << " " << t.b.position.y << " " << t.b.position.z << " :tribngle\n";
+        a = proj * a;
+        b = proj * b;
+        c = proj * c;
 
-    a = view * gp::Vec4(t.a.position);
-    b = view * gp::Vec4(t.b.position);
-    c = view * gp::Vec4(t.c.position);
+        std::cout << a.x << " " << a.y << " " << a.z << " " << a.w << " :vec4 after proj\n";
+        std::cout << b.x << " " << b.y << " " << b.z << " " << b.w << " :vec4 bfter proj\n";
+        std::cout << c.x << " " << c.y << " " << c.z << " " << c.w << " :vec4 cfter proj\n";
 
-    a = proj * a;
-    b = proj * b;
-    c = proj * c;
+        if(a.w < 0.1f || b.w < 0.1f || c.w < 0.1f) continue;
 
-    std::cout << a.x << " " << a.y << " " << a.z << " " << a.w << " :vec4 after proj\n";
-    std::cout << b.x << " " << b.y << " " << b.z << " " << b.w << " :vec4 bfter proj\n";
-    std::cout << c.x << " " << c.y << " " << c.z << " " << c.w << " :vec4 cfter proj\n";
+        gp::Vec3 ndcA = a/a.w;
+        gp::Vec3 ndcB = b/b.w;
+        gp::Vec3 ndcC = c/c.w;
 
-    gp::Vec3 ndcA = a/a.w;
-    gp::Vec3 ndcB = b/b.w;
-    gp::Vec3 ndcC = c/c.w;
+        std::cout << ndcA.x << " " << ndcA.y << " " << ndcA.z << " :vec3 after division ay w\n";
+        std::cout << ndcB.x << " " << ndcB.y << " " << ndcB.z << " :vec3 Bfter division by w\n";
+        std::cout << ndcC.x << " " << ndcC.y << " " << ndcC.z << " :vec3 Cfter division Cy w\n";
 
-    std::cout << ndcA.x << " " << ndcA.y << " " << ndcA.z << " :vec3 after division ay w\n";
-    std::cout << ndcB.x << " " << ndcB.y << " " << ndcB.z << " :vec3 Bfter division by w\n";
-    std::cout << ndcC.x << " " << ndcC.y << " " << ndcC.z << " :vec3 Cfter division Cy w\n";
+        gp::Triangle2D t2;
 
-    gp::Triangle2D t2;
+        t2.a = gp::Vertex2D(window.toScreen(ndcA), {255,255,255}, ndcA.z);
+        t2.b = gp::Vertex2D(window.toScreen(ndcB), {255,255,255}, ndcB.z);
+        t2.c = gp::Vertex2D(window.toScreen(ndcC), {255,255,255}, ndcC.z);
 
-    t2.a = gp::Vertex2D(window.toScreen(ndcA), {255,255,255}, ndcA.z);
-    t2.b = gp::Vertex2D(window.toScreen(ndcB), {255,255,255}, ndcB.z);
-    t2.c = gp::Vertex2D(window.toScreen(ndcC), {255,255,255}, ndcC.z);
+        std::cout << t2.a.position.x << " " << t2.a.position.y << " :triangle\n";
+        std::cout << t2.b.position.x << " " << t2.b.position.y << " :tribngle\n";
+        std::cout << t2.c.position.x << " " << t2.c.position.y << " :tricngle\n";
 
-    std::cout << t2.a.position.x << " " << t2.a.position.y << " :triangle\n";
-    std::cout << t2.b.position.x << " " << t2.b.position.y << " :tribngle\n";
-    std::cout << t2.c.position.x << " " << t2.c.position.y << " :tricngle\n";
-
-    window.drawTriangle(t2);
+        window.drawTriangle(t2);
+    }
 
     std::cout << "qwe\n";
     window.display();
