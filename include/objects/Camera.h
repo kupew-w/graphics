@@ -20,8 +20,8 @@ struct Camera
 
     void rotate(float yaw, float pitch, float roll);
 
-    Mat4 viewMatrix();
-    Mat4 projectionMatrix();
+    Mat4 viewMatrix() const;
+    Mat4 projectionMatrix() const;
 };
 
 }

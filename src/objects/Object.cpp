@@ -5,7 +5,7 @@
 
 using namespace gp;
 
-Mat4 Object::modelMatrix()
+Mat4 Object::modelMatrix() const
 {
     Mat4 out;
 

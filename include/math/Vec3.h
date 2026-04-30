@@ -27,8 +27,8 @@ struct Vec3
     void operator*= (const float);
     void operator/= (const float);
 
-    Vec3 normalize();
-    float lenght();
+    Vec3 normalize() const;
+    float lenght() const;
 
     static Vec3 crossProd(const Vec3&, const Vec3&);
     static float dotProd(const Vec3&, const Vec3&);

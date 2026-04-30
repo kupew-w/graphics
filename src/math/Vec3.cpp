@@ -28,10 +28,10 @@ void Vec3::operator*= (const float a)
 void Vec3::operator/= (const float a)
 { x /= a; y /= a; z /= a; }
 
-Vec3 Vec3::normalize() 
+Vec3 Vec3::normalize() const
 { return *this / this->lenght(); }
 
-float Vec3::lenght()
+float Vec3::lenght() const
 { return sqrt(x*x + y*y + z*z); }
 
 Vec3 Vec3::crossProd(const Vec3& v1, const Vec3& v2)

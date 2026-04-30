@@ -30,6 +30,12 @@ void Window::close()
 
 void Window::clear()
 {
+    for(int y = 0; y < height; ++y) {
+        for(int x = 0; x < width; ++x) 
+        {
+            buffer[y][x].c = ' ';
+        }
+    }
     std::cout << "\x1b[2J"; //clear screen
     std::cout << "\x1b[H"; //move cursor to 0 0 
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "geomtery/Line2D.h"
-#include "geomtery/Triagle2D.h"
+#include "geomtery/Triangle2D.h"
 #include "objects/Color.h"
 
 namespace gp 

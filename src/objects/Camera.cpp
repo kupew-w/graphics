@@ -14,7 +14,7 @@ void Camera::rotate(float yaw, float pitch, float roll)
 //FIXME
 }
 
-Mat4 Camera::viewMatrix()
+Mat4 Camera::viewMatrix() const
 {
     Mat4 out;
 
@@ -42,7 +42,7 @@ Mat4 Camera::viewMatrix()
     return out;
 }
 
-Mat4 Camera::projectionMatrix()
+Mat4 Camera::projectionMatrix() const
 {
     Mat4 out;
 

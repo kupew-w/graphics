@@ -14,6 +14,7 @@ add_executable(Graphics
     src/objects/Color.cpp
     src/objects/Object.cpp
     src/objects/Camera.cpp
+    src/render/Projection.cpp
     src/render/ASCII/render/Color.cpp
     src/render/ASCII/window/Window.cpp
     src/fstream/FObj.cpp
