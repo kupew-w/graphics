@@ -15,7 +15,7 @@ struct Object
 
     float yaw = 0, pitch = 0, roll = 0;
 
-    std::shared_ptr<Mesh> mesh;
+    std::shared_ptr<Mesh> mesh = nullptr;
 
     float mass;
 
