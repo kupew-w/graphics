@@ -6,10 +6,10 @@ namespace gp
 class IWindow
 {
 protected:
-    int width, height;
+    int w = 0, h = 0;
 
 public:
-    IWindow(int w, int h) : width(w), height(h) {}
+    IWindow(int w, int h) : w(w), h(h) {}
 
     virtual void init() = 0;
     virtual void close() = 0;
@@ -18,8 +18,8 @@ public:
     // virtual void drawLine(Line2D) = 0;
     // virtual void drawTriangle(Triangle2D) = 0;
 
-    int getWigth() { return width; }
-    int getHeight() { return height; }
+    int width() const { return w; }
+    int height() const { return h; }
 
     IWindow() = default;
     IWindow(IWindow&&) = default;

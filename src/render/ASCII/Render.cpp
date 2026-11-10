@@ -1,37 +1,17 @@
+#include "render/ASCII/Render.h"
+#include "render/ASCII/Color.h"
 
-#include "render/ASCII/window/Window.h"
-#include "math/Vec3.h"
-#include "render/ASCII/render/Color.h"
 #include <algorithm>
-#include <climits>
 #include <iostream>
 #include <ostream>
 
-using namespace gp;
-using namespace asc;
 
-Window::Window(int w, int h) : IWindow(w, h) 
-{
-    buffer = std::vector(h, std::vector<Pixel>(w, Pixel(' ', INT_MAX)));
-}
+using namespace gp::asc;
 
-void Window::init()
+void Render::clear()
 {
-    std::cout << "\x1b[?1049h"; //enable alternate buffer
-    std::cout << "\x1b[?25l"; //hide cursor
-    std::cout << "\x1b[H"; // move cursor to 0 0
-}
-
-void Window::close()
-{
-    std::cout << "\x1b[?25h"; //show cursor
-    std::cout << "\x1b[?1049l"; //disable alternate buffer
-}
-
-void Window::clear()
-{
-    for(int y = 0; y < height; ++y) {
-        for(int x = 0; x < width; ++x) 
+    for(int y = 0; y < window->height(); ++y) {
+        for(int x = 0; x < window->width(); ++x) 
         {
             buffer[y][x].c = ' ';
         }
@@ -40,17 +20,18 @@ void Window::clear()
     std::cout << "\x1b[H"; //move cursor to 0 0 
 }
 
-void Window::display()
+void Render::display()
 {
     std::cout << "\x1b[H"; //move cursor to 0 0 
     
-    std::string screen;
-    screen.reserve(height*width+height);
-    std::cout << height  << " :h\t" << width << " :w\n";
+    const int h = window->height();
+    const int w = window->width();
 
-    //std::cout << height << " :h\t" << width << " :w\n";
-    for(int y = 0; y < height; ++y) {
-        for(int x = 0; x < width; ++x) 
+    std::string screen;
+    screen.reserve(h*w+h);
+
+    for(int y = 0; y < h; ++y) {
+        for(int x = 0; x < w; ++x) 
         {
             screen += buffer[y][x].c;
         }
@@ -60,13 +41,13 @@ void Window::display()
     std::cout << screen << std::flush;
 }
 
-void Window::drawPixel(int x, int y, gp::Color c)
+void Render::drawPixel(int x, int y, gp::Color c)
 {
-    if(x < 0 || x >= width || y < 0 || y >= height) return;
+    if(x < 0 || x >= window->width() || y < 0 || y >= window->height()) return;
     buffer[y][x].c = AsciiColor::cts(c); // add z-buffer check
 }
 
-void Window::drawLine(gp::Line2D l)
+void Render::drawLine(gp::Line2D l)
 {
     int x1 = l.a.position.x;
     int x2 = l.b.position.x;
@@ -99,7 +80,7 @@ void Window::drawLine(gp::Line2D l)
     }
 }
 
-void Window::drawTriangle(gp::Triangle2D t)
+void Render::drawTriangle(gp::Triangle2D t)
 {
     const int X1 = (t.a.position.x * 16)+ 0.5;
     const int X2 = (t.b.position.x * 16)+ 0.5;
@@ -176,14 +157,4 @@ void Window::drawTriangle(gp::Triangle2D t)
         CY2 += FDX23;
         CY3 += FDX31;
     }
-}
-
-Vec2 Window::toScreen(Vec3 v)
-{
-    Vec2 out;
-
-    out.x = (v.x + 1) * 0.5f * width; 
-    out.y = (1 - v.y) * 0.5f * height; 
-
-    return out;
 }

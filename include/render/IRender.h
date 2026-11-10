@@ -16,7 +16,7 @@ public:
     virtual void clear() = 0;
     virtual void display() = 0;
 
-    virtual void setCamera(const std::shared_ptr<gp::Camera> cam) { this->cam = cam; }
+    virtual void setCamera(std::shared_ptr<gp::Camera> cam) { this->cam = cam; }
     virtual void setViewport(gp::Viewport v) { view = v; };
 
     IRender() = default;

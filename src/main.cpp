@@ -9,7 +9,7 @@
 #include "math/Vec4.h"
 #include "objects/Camera.h"
 #include "objects/Object.h"
-#include "render/ASCII/window/Window.h"
+#include "render/ASCII/Window.h"
 #include "render/Projection.h"
 
 #include <iostream>

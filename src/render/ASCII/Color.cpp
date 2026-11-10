@@ -1,4 +1,4 @@
-#include "render/ASCII/render/Color.h"
+#include "render/ASCII/Color.h"
 #include <algorithm>
 #include <cmath>
 
