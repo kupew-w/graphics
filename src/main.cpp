@@ -10,6 +10,7 @@
 #include "objects/Camera.h"
 #include "objects/Object.h"
 #include "render/ASCII/Window.h"
+#include "render/ASCII/Render.h"
 #include "render/Projection.h"
 
 #include <iostream>
@@ -84,13 +85,15 @@ int main()
     gp::Camera cam;
     cam.aspect = static_cast<float>(width)/height*0.5f;
 
-    gp::asc::Window window(width, height);
+    std::shared_ptr<gp::asc::Window> window = std::make_shared<gp::asc::Window>(gp::asc::Window(width, height));
 
-    window.init();
+    window->init();
+
+    gp::asc::Render render(window);
 
     for(int i = 0; i < 20; ++i)
     {
-        window.clear();
+        render.clear();
 
         cube.pitch += std::numbers::pi/5;
         cube.roll += std::numbers::pi/5;
@@ -102,17 +105,17 @@ int main()
         {
             gp::Triangle2D t2;
 
-            t2.a = gp::Vertex2D(window.toScreen(t.a.position), {255,255,255}, t.a.position.z);
-            t2.b = gp::Vertex2D(window.toScreen(t.b.position), {255,255,255}, t.b.position.z);
-            t2.c = gp::Vertex2D(window.toScreen(t.c.position), {255,255,255}, t.c.position.z);
+            t2.a = gp::Vertex2D(window->toScreen(t.a.position), {255,255,255}, t.a.position.z);
+            t2.b = gp::Vertex2D(window->toScreen(t.b.position), {255,255,255}, t.b.position.z);
+            t2.c = gp::Vertex2D(window->toScreen(t.c.position), {255,255,255}, t.c.position.z);
 
-            window.drawTriangle(t2);
+            render.drawTriangle(t2);
         }
 
-        window.display();
+        render.display();
         sleep(1);
     }
-    window.close();
+    window->close();
 
 	return 0;
 }

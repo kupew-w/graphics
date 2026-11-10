@@ -11,6 +11,8 @@ namespace asc
 class Window : public IWindow
 {
 public:
+    Window(int w, int h) : IWindow(w, h) {}
+
     void init() override;
     void close() override;
 

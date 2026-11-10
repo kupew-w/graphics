@@ -8,8 +8,21 @@
 
 using namespace gp::asc;
 
+void Render::resizeBuffer()
+{
+    const int w = window->width();
+    const int h = window->height();
+
+    if(buffer.size() == w && buffer[0].size() == h)
+        return;
+
+    buffer.assign(h, std::vector<Pixel>(w));
+}
+
 void Render::clear()
 {
+    resizeBuffer();
+
     for(int y = 0; y < window->height(); ++y) {
         for(int x = 0; x < window->width(); ++x) 
         {

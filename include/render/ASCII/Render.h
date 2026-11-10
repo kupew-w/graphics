@@ -19,7 +19,7 @@ private:
     void resizeBuffer();
 
 public:
-    explicit Render(std::shared_ptr<IWindow> w) : window(w) {}
+    explicit Render(std::shared_ptr<IWindow> w) : window(w) { resizeBuffer(); }
 
     void clear() override;
     void display() override;
